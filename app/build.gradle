@@ -38,6 +38,7 @@ dependencies {
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-database:19.5.1'
 
     // ButterKnife
     implementation 'com.jakewharton:butterknife:10.2.3'
