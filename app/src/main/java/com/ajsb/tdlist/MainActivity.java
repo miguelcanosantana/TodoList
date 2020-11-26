@@ -75,7 +75,10 @@ public class MainActivity extends AppCompatActivity
 
                 // obtenemos la lista de tareas del usuario
                 List<Integer> tar = usuario.getTareas() ;
-                              tar.clear() ;
+
+                // vaciamos la lista original de tareas (la que pasamos al adaptador)
+                // para que no se duplique la información
+                tareas.clear() ;
 
                 // lanzamos una petitición a la base de datos
                 // por cada tarea.
@@ -104,8 +107,25 @@ public class MainActivity extends AppCompatActivity
                   @Override
                   public void onDataChange(@NonNull DataSnapshot snapshot)
                   {
-                        tareas.add(snapshot.getValue(Tarea.class)) ;
-                        adapter.notifyDataSetChanged() ;
+                      Log.i("TAREA", "cargando tarea: " + idt) ;
+
+                      int i ;
+
+                      // buscamos en tareas si la tarea con idt existe
+                      for (i=0; i < tareas.size(); i++)
+                          if (tareas.get(i).getId()==idt) break ;
+
+                      if (i >= tareas.size())
+                      {
+                          tareas.add(snapshot.getValue(Tarea.class)) ;
+                          tareas.get(tareas.size()-1).setId(idt) ;
+                          adapter.notifyDataSetChanged() ;
+                      } else {
+                          tareas.get(i).setTarea(snapshot.child("tarea").getValue().toString()) ;
+                          tareas.get(i).setLista(Integer.parseInt(snapshot.child("lista").getValue().toString())) ;
+                          tareas.get(i).setCompleta((Boolean) snapshot.child("completa").getValue());
+                          adapter.notifyItemChanged(i) ;
+                      }
                   }
 
                   @Override
