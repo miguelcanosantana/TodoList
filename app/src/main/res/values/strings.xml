@@ -13,4 +13,12 @@
     <!-- Errores -->
     <string name="err_login">Nombre de usuario o contraseña incorrecta</string>
 
+    <!-- Menú -->
+    <string name="mnu_perfil">Perfil</string>
+    <string name="mnu_salir">Salir</string>
+
+    <!-- Mensajes -->
+    <string name="msg_salir">¿Está seguro de querer salir de la aplicación?</string>
+
+
 </resources>

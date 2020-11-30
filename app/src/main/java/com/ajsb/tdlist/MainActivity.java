@@ -7,9 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ajsb.tdlist.modelo.Tarea;
 import com.ajsb.tdlist.modelo.Usuario;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -134,5 +138,57 @@ public class MainActivity extends AppCompatActivity
                       Log.i("ERROR", error.getMessage()) ;
                   }
               }) ;
+    }
+
+    /**
+     */
+    @Override
+    public void onBackPressed() { }
+
+    /**
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.main_menu, menu) ;
+        return super.onCreateOptionsMenu(menu) ;
+    }
+
+    /**
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.mnuPerfil:
+                    Snackbar.make(rv, "Has pulsado en la opción PERFIL",Snackbar.LENGTH_LONG).show() ;
+                    break ;
+            case R.id.mnuSalir:
+                    MaterialAlertDialogBuilder madb ;
+                    madb = new MaterialAlertDialogBuilder(this) ;
+                    madb.setTitle(R.string.app_name)
+                        .setMessage(R.string.msg_salir)
+                        .setPositiveButton("SI", (dialog, which) ->
+                        {
+                            fauth.signOut() ;   // Deslogueamos
+                            finish() ;
+
+                            return ;
+                        })
+                        .setNegativeButton("NO", (dialog, which) -> { })
+                        .create()
+                        .show();
+                    break ;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true ;
+
     }
 }
