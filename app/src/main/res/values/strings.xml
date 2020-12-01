@@ -5,20 +5,32 @@
     <!-- Hints -->
     <string name="hint_email">Email</string>
     <string name="hint_password">Contraseña</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_apellidos">Apellidos</string>
+    <string name="hint_ciudad">Elige tu ciudad</string>
 
     <!-- Etiquetas -->
     <string name="lab_entrar">Entrar</string>
     <string name="lab_registrar">Registrar</string>
+    <string name="lab_cancelar">Cancelar</string>
 
     <!-- Errores -->
     <string name="err_login">Nombre de usuario o contraseña incorrecta</string>
-
-    <!-- Menú -->
-    <string name="mnu_perfil">Perfil</string>
-    <string name="mnu_salir">Salir</string>
+    <string name="err_registro">Email y contraseña obligatorios</string>
 
     <!-- Mensajes -->
     <string name="msg_salir">¿Está seguro de querer salir de la aplicación?</string>
 
+
+    <!-- Mensajes -->
+    <string name="msg_logout">¿Realmente desea salir?</string>
+    <string name="msg_si">Si</string>
+    <string name="msg_no">No</string>
+
+    <!-- Menú -->
+    <string name="mnu_perfil">Perfil</string>
+    <string name="mnu_salir">Salir</string>
+    <string name="mnu_editar">Editar</string>
+    <string name="mnu_borrar">Borrar</string>
 
 </resources>

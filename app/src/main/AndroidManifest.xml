@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,17 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tdlist">
-
+        <activity android:name=".AniadirActivity"></activity>
         <!-- Registro -->
-        <activity android:name=".RegisterActivity"></activity>
-
-        <!-- Actividad principal -->
-        <activity android:name=".MainActivity" />
-
-        <!-- Login activity -->
+        <activity android:name=".RegisterActivity" /> <!-- Actividad principal -->
+        <activity android:name=".MainActivity" /> <!-- Login activity -->
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

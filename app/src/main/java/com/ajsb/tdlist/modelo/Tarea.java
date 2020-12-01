@@ -1,5 +1,11 @@
 package com.ajsb.tdlist.modelo;
 
+/**
+ * Programación Multimedia y de Dispositivos Móviles
+ * Antonio J.Sánchez
+ * ToDoList
+ */
+
 public class Tarea
 {
     private int id ;
