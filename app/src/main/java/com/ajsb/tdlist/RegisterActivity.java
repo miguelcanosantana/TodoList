@@ -113,6 +113,9 @@ public class RegisterActivity extends AppCompatActivity
                           ref = fbdbase.getReference("usuarios") ;
                           ref.child(uid)
                              .setValue(usr) ;
+                          //
+                          finish() ;
+                          return ;
                       }
                   }) ;
 

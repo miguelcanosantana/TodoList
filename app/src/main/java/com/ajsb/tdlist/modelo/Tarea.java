@@ -14,9 +14,8 @@ public class Tarea
     private Boolean completa ;
 
     public Tarea() { }
-    public Tarea(int id, String tarea, int lista, Boolean completa)
+    public Tarea(String tarea, int lista, Boolean completa)
     {
-        this.id = id ;
         this.tarea = tarea ;
         this.lista = lista ;
         this.completa = completa ;

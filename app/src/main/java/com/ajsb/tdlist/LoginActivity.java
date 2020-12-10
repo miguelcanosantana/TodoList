@@ -59,8 +59,8 @@ public class LoginActivity extends AppCompatActivity
     private void doLogin(View view)
     {
         // obtenemos el valor de los campos
-        String ema = getString(email) ;
-        String pas = getString(password) ;
+        String ema = ConvertirTexto(email) ;
+        String pas = ConvertirTexto(password) ;
 
         // obtenemos una instancia el objeto FirebaseAuth
         FirebaseAuth fba = FirebaseAuth.getInstance() ;
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity
      * @param view
      * @return
      */
-    private String getString(TextView view)
+    private String ConvertirTexto(TextView view)
     {
         return view.getText().toString().trim() ;
     }

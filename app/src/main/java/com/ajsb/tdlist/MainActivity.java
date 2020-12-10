@@ -7,6 +7,7 @@ package com.ajsb.tdlist;
  */
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,13 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ajsb.tdlist.modelo.Tarea;
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity
         adapter = new TareasAdapter(this, R.layout.item_tarea_layout, tareas) ;
         rv.setLayoutManager(new LinearLayoutManager(this)) ;
         rv.setAdapter(adapter) ;
+        rv.setHasFixedSize(true) ;
 
         // Obtenemos la instancia de FirebaseAuth y FirebaseDatabase
         fauth  = FirebaseAuth.getInstance() ;
@@ -79,11 +85,66 @@ public class MainActivity extends AppCompatActivity
         // registramos el menú contextual y lo asociamos a la vista
         registerForContextMenu(rv) ;
 
+        // cuando pulsamos en el botón flotante
         boton.setOnClickListener(v ->
         {
-            Intent i = new Intent(this, AniadirActivity.class) ;
-            startActivity(i) ;
+            // inflamos el layout de nuestro mensaje de alerta
+            View vista = getLayoutInflater().inflate(R.layout.add_task, null) ;
+
+
+
+            // instanciamos el constructor de diálogos
+            AlertDialog.Builder adb = new AlertDialog.Builder(this) ;
+
+            // asociar el layout (vista) a la ventana de diálogo
+            adb.setView(vista) ;
+
+            // configurmos la ventana y la mostramos
+            adb.setPositiveButton("Guardar", (dialog, which) ->
+            {
+                EditText tarea    = vista.findViewById(R.id.tarea) ;
+                CheckBox completa = vista.findViewById(R.id.completa) ;
+
+                aniadirTarea(ConvertirTexto(tarea),
+                             completa.isChecked()) ;
+            })
+               .setNegativeButton("Cancelar", (d, w) -> {})
+               .create()
+               .show() ;
+
         });
+
+    }
+
+    /**
+     * @param texto
+     * @param completa
+     */
+    private void aniadirTarea(String texto, boolean completa)
+    {
+
+
+        // añadir la nueva información a la base de datos
+        DatabaseReference ref ;
+        ref = fdbase.getReference("tareas") ;
+        String id = ref.push().getKey() ;
+
+        Tarea t = new Tarea(texto, 1, completa) ;
+        //t.setId(id) ;
+
+        ref.child(id).setValue(t) ;
+
+
+
+        // añadimos la tarea a la lista local
+        tareas.add(new Tarea(texto, 1, completa)) ;
+
+        // notificamos el cambio al adaptador
+        adapter.notifyDataSetChanged() ;
+
+
+
+
 
     }
 
@@ -104,17 +165,20 @@ public class MainActivity extends AppCompatActivity
                 // obtenemos el nodo usuario
                 usuario = snapshot.getValue(Usuario.class) ;
 
-                // obtenemos la lista de tareas del usuario
-                List<Integer> tar = usuario.getTareas() ;
+                // si el usuario tiene tareas, las obtenemos de la base de datos
+                if (usuario.getTareas()!=null)
+                {
+                    List<Integer> tar = usuario.getTareas();
 
-                // vaciamos la lista original de tareas (la que pasamos al adaptador)
-                // para que no se duplique la información
-                tareas.clear() ;
+                    // vaciamos la lista original de tareas (la que pasamos al adaptador)
+                    // para que no se duplique la información
+                    tareas.clear();
 
-                // lanzamos una petitición a la base de datos
-                // por cada tarea.
-                for (int i=0; i < tar.size(); i++)
-                    loadInfoTarea(tar.get(i)) ;
+                    // lanzamos una petitición a la base de datos
+                    // por cada tarea.
+                    for (int i = 0; i < tar.size(); i++)
+                        loadInfoTarea(tar.get(i));
+                }
             }
 
             /**
@@ -248,5 +312,14 @@ public class MainActivity extends AppCompatActivity
         }
 
         return true ;
+    }
+
+    /**
+     * @param view
+     * @return
+     */
+    private String ConvertirTexto(TextView view)
+    {
+        return view.getText().toString().trim() ;
     }
 }

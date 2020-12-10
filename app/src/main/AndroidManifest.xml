@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tdlist">
-        <activity android:name=".AniadirActivity"></activity>
         <!-- Registro -->
         <activity android:name=".RegisterActivity" /> <!-- Actividad principal -->
         <activity android:name=".MainActivity" /> <!-- Login activity -->

@@ -8,11 +8,13 @@
     <string name="hint_nombre">Nombre</string>
     <string name="hint_apellidos">Apellidos</string>
     <string name="hint_ciudad">Elige tu ciudad</string>
+    <string name="hint_tarea">Añade tarea</string>
 
     <!-- Etiquetas -->
     <string name="lab_entrar">Entrar</string>
     <string name="lab_registrar">Registrar</string>
     <string name="lab_cancelar">Cancelar</string>
+    <string name="lab_completa">Completa</string>
 
     <!-- Errores -->
     <string name="err_login">Nombre de usuario o contraseña incorrecta</string>
